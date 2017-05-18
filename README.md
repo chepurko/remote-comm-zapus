@@ -1,4 +1,4 @@
-# remote-comm-yakkety
+# remote-comm-zapus
 Simple Ubuntu 17.04 image with various packages installed for remote server management. Meant to be deployed on any cloud instance and populated with SSH keys and credentials to manage Kubernetes, `git` repos, etc.
 
 ## What's included
@@ -45,6 +45,6 @@ Simple Ubuntu 17.04 image with various packages installed for remote server mana
   * Repeat the `sudo mount -t ecryptfs .secret/ secret/` to mount your secret directory anytime, going through the interactive prompts and answering the same way as when you initially set it up.
   
 * Start a container with the bucket and secrets mounted:
-  `docker run -it -v /mnt/gcsbucket:/root/gcsbucket chepurko/remote-comm-yakkety /bin/bash`
+  `docker run -it -v /mnt/gcsbucket:/root/gcsbucket chepurko/remote-comm-zapus /bin/bash`
 
 * **NOTE: The Dockerfile relies on your directories being named `gcsbucket`, so if you must use a different dir name then you'll have to modify the Dockerfile on your own as welll.**

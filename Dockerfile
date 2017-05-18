@@ -7,7 +7,8 @@ RUN apt update && apt install -y \
       bzip2 xz-utils zip unzip \
       build-essential \
       bash-completion \
-      lsb-release apt-transport-https && \
+      lsb-release apt-transport-https \
+      fuse && \
       rm -rf /var/lib/apt/lists/*
     
 RUN cd /usr/local/src && \
@@ -17,15 +18,15 @@ RUN cd /usr/local/src && \
     export KUBERNETES_SKIP_CONFIRM=Y && \
     kubernetes/cluster/get-kube-binaries.sh
 
-RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
-      GCSFUSE_REPO="gcsfuse-$(lsb_release -c -s)" && \
+RUN curl -L -O https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v0.21.0/gcsfuse_0.21.0_amd64.deb && \
+    dpkg --install gcsfuse_0.21.0_amd64.deb
+
+RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
     echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | \
       tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-    echo "deb http://packages.cloud.google.com/apt $GCSFUSE_REPO main" | \
-      tee /etc/apt/sources.list.d/gcsfuse.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
     apt update && apt install -y \
-      google-cloud-sdk gcsfuse \
+      google-cloud-sdk \
       --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 # More apps at the end so we don't have to rebuild the image from base layers
