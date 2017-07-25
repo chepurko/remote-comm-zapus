@@ -25,7 +25,7 @@ Simple Ubuntu 17.04 image with various packages installed for remote server mana
 * Mount a GCS Bucket:
 
   ```bash
-  sudo mkdir /mnt/gcsbucket && chown $USER:$USER /mnt/gcsbucket
+  sudo mkdir /mnt/gcsbucket && sudo chown $USER:$USER /mnt/gcsbucket
   sudo sed -i 's/^#user_allow_other/user_allow_other/g' /etc/fuse.conf
   gcsfuse -o allow_other name_of_your_GCS_bucket /mnt/gcsbucket
   ```
